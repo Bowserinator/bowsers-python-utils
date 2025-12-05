@@ -1,0 +1,109 @@
+# ───────────────────────────────────
+# Python bytecode / cache files
+# ───────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.ignore
+
+# C extensions
+*.so
+
+# ───────────────────────────────────
+# Virtual environments
+# ───────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.conda/
+.venv*/
+
+# Pipenv / Poetry
+Pipfile.lock
+poetry.lock
+
+# ───────────────────────────────────
+# Build / packaging
+# ───────────────────────────────────
+build/
+dist/
+develop-eggs/
+.eggs/
+*.egg-info/
+*.egg
+MANIFEST
+
+# ───────────────────────────────────
+# PyInstaller
+# ───────────────────────────────────
+*.manifest
+*.spec
+
+# ───────────────────────────────────
+# Unit test / coverage
+# ───────────────────────────────────
+.coverage
+.coverage.*
+.cache/
+pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+htmlcov/
+
+# ───────────────────────────────────
+# MyPy / type checking
+# ───────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyright
+typings/
+
+# Pyre
+.pyre/
+
+# ───────────────────────────────────
+# Jupyter Notebook
+# ───────────────────────────────────
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# ───────────────────────────────────
+# Shared Python tools
+# ───────────────────────────────────
+.pytype/
+pylint.log
+
+# ───────────────────────────────────
+# IDE / editor files
+# ───────────────────────────────────
+# VSCode
+.vscode/
+# PyCharm
+.idea/
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ───────────────────────────────────
+# Operating system files
+# ───────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ───────────────────────────────────
+# Local dev / misc
+# ───────────────────────────────────
+*.log
+*.tmp
+*.swp
+*.swo
+
+# dotenv / secret config
+.env
+.env.*
+*.env
