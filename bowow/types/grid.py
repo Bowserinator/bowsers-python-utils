@@ -84,11 +84,27 @@ class Grid(AbstractGrid[T]):
         self._data = [[fill for _ in range(width)] for _ in range(height)]
 
     @classmethod
-    def from_string(cls, s: str) -> "Grid[str]":
-        """Construct a grid from a multiline string."""
+    def from_string(cls, s: str, split: str | None = None) -> "Grid[str]":
+        """
+        Construct a grid from a multiline string.
+
+        :param split: Split each row by this. Default: each char = eaach grid element.
+                      If empty space, calls .split() (ignoring empty strings), otherwise
+                      splits by the given delimeter
+        """
         lines = [line.strip() for line in s.strip().splitlines() if line.strip()]
         height = len(lines)
+
+        for y, line in enumerate(lines):
+            if split is None:
+                lines[y] = list(line)
+            elif split == " ":
+                lines[y] = line.split()
+            else:
+                lines[y] = line.split(split)
+
         width = max(len(line) for line in lines)
+
         g = cls(width, height, fill=None)
         for y, line in enumerate(lines):
             for x, c in enumerate(line):
@@ -110,6 +126,12 @@ class Grid(AbstractGrid[T]):
     def __setitem__(self, pos: tuple[int, int], value: T):
         x, y = pos
         self._data[y][x] = value
+
+    def row(self, y: int) -> list[int]:
+        return self._data[y]
+
+    def col(self, x: int) -> list[int]:
+        return [row[x] for row in self._data]
 
     def transpose(self) -> "Grid[T]":
         g = Grid(self._height, self._width)
