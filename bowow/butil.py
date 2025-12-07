@@ -1,4 +1,5 @@
 #!/bin/python3
+import contextlib
 import datetime
 import functools
 import importlib
@@ -15,6 +16,8 @@ import time
 import traceback
 from collections.abc import Callable, Iterator
 from typing import TextIO
+
+import psutil
 
 
 def ttl_cache(seconds: int, maxsize: int = -1):
@@ -380,3 +383,21 @@ def mp_run(func: Callable[..., any], *args, timeout: float = -1.0, **kwargs) -> 
             exc_type, exc_value, formatted = payload
             raise exc_type(f"{exc_value}\n(Subprocess traceback):\n{formatted}")
     raise RuntimeError("quarantine: subprocess exited without returning a result")
+
+
+def recursive_kill(pid: int, sig: int = signal.SIGTERM):
+    """Recursively signal PID and its children"""
+    try:
+        parent = psutil.Process(pid)
+    except psutil.NoSuchProcess:
+        return
+    try:
+        children = parent.children(recursive=True)
+    except psutil.NoSuchProcess:
+        children = []
+
+    for child in children:
+        with contextlib.suppress((ProcessLookupError, PermissionError)):
+            os.kill(child.pid, sig)
+    with contextlib.suppress((ProcessLookupError, PermissionError)):
+        os.kill(pid, sig)
